@@ -2,7 +2,7 @@
   "version": 2,
   "builds": [
     {
-      "src":  "*.js",
+      "src":  "server.js",
       "use": "@vercel/node"
     }
   ],
@@ -10,18 +10,6 @@
     {
       "src":  "/(.*)",
       "dest": "/"
-    },
-    {
-      "src": "/login",
-      "dest": "/login"
-    },
-    {
-      "src": "/tours",
-      "dest": "/tours"
-    },
-    {
-      "src": "/signup",
-      "dest": "/signup"
     }
   ]
 }
