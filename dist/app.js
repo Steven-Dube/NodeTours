@@ -12,7 +12,8 @@ const app = (0, express_1.default)();
 app.use(express_1.default.json());
 app.use(cookieParser());
 app.use(cors({
-    credentials: true
+    credentials: true,
+    origin: true
 }));
 app.use('/tours', tourRouter);
 app.use('/users', userRouter);
