@@ -33,15 +33,11 @@ exports.signup = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         });
         const token = signup(newUser._id);
         res.status(200)
-            .cookie('jwt', token, {
-            expires: new Date(Date.now() + parseInt(process.env.JWT_COOKIE_EXPIRES_IN) * 24 * 60 * 60 * 1000),
-            httpOnly: true,
-            secure: true,
-        })
             .json({
             user: {
                 id: newUser._id,
-                name: newUser.name
+                name: newUser.name,
+                token: token
             }
         })
             .send();
@@ -71,15 +67,11 @@ exports.login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         }
         const token = signup(user._id);
         res.status(200)
-            .cookie('jwt', token, {
-            expires: new Date(Date.now() + parseInt(process.env.JWT_COOKIE_EXPIRES_IN) * 24 * 60 * 60 * 1000),
-            secure: true,
-            httpOnly: true,
-        })
             .json({
             user: {
                 id: user._id,
-                name: user.name
+                name: user.name,
+                token: token
             }
         })
             .send();
@@ -91,33 +83,12 @@ exports.login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         });
     }
 });
-exports.logout = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const token = req.cookies.jwt;
-    if (!token) {
-        res.status(401).json({
-            message: 'You are not logged in'
-        });
-        return;
-    }
-    try {
-        res.cookie("jwt", null, {
-            expires: new Date(Date.now()),
-            httpOnly: true,
-            secure: true,
-        })
-            .status(200)
-            .json({
-            message: 'Logged out'
-        });
-    }
-    catch (err) {
-        res.status(500).json({
-            message: 'An error occured on the server side'
-        }).send();
-    }
-});
 exports.authorize = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const token = req.cookies.jwt;
+    let token;
+    if (req.headers.authorization &&
+        req.headers.authorization.startsWith('Bearer')) {
+        token = req.headers.authorization.split(' ')[1];
+    }
     if (!token) {
         res.status(401).json({
             message: 'You are not logged in'
