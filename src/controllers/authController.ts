@@ -30,8 +30,8 @@ exports.signup = async (req: Request, res: Response): Promise<void> => {
   res.status(200)
     .cookie('jwt', token, {
       expires: new Date(Date.now() + parseInt(process.env.JWT_COOKIE_EXPIRES_IN) * 24 * 60 * 60 * 1000),
-      httpOnly: false,
-      secure: true,
+      httpOnly: true,
+      secure: false,
       sameSite: 'none'
     })
       .json({
@@ -71,8 +71,8 @@ exports.login = async (req: Request, res: Response): Promise<void> => {
     res.status(200)
       .cookie('jwt', token, {
         expires: new Date(Date.now() + parseInt(process.env.JWT_COOKIE_EXPIRES_IN) * 24 * 60 * 60 * 1000),
-        secure: true,
-        httpOnly: false,
+        secure: false,
+        httpOnly: true,
         sameSite: 'none'
     })
       .json({
@@ -103,8 +103,8 @@ exports.logout = async (req: Request, res: Response, next: NextFunction): Promis
   try {
     res.cookie("jwt", null, {
       expires: new Date(Date.now()),
-      httpOnly: false,
-      secure: true,
+      httpOnly: true,
+      secure: false,
       sameSite: 'none'
     })
       .status(200)
