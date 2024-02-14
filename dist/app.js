@@ -11,10 +11,7 @@ const cors = require('cors');
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
 app.use(cookieParser());
-app.use(cors({
-    credentials: true,
-    origin: true
-}));
+app.use(cors());
 app.use('/tours', tourRouter);
 app.use('/users', userRouter);
 module.exports = app;
