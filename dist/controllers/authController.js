@@ -36,7 +36,8 @@ exports.signup = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             .cookie('jwt', token, {
             expires: new Date(Date.now() + parseInt(process.env.JWT_COOKIE_EXPIRES_IN) * 24 * 60 * 60 * 1000),
             httpOnly: false,
-            secure: true
+            secure: true,
+            sameSite: 'none'
         })
             .json({
             user: {
@@ -74,7 +75,8 @@ exports.login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             .cookie('jwt', token, {
             expires: new Date(Date.now() + parseInt(process.env.JWT_COOKIE_EXPIRES_IN) * 24 * 60 * 60 * 1000),
             secure: true,
-            httpOnly: false
+            httpOnly: false,
+            sameSite: 'none'
         })
             .json({
             user: {
@@ -103,7 +105,8 @@ exports.logout = (req, res, next) => __awaiter(void 0, void 0, void 0, function*
         res.cookie("jwt", null, {
             expires: new Date(Date.now()),
             httpOnly: false,
-            secure: true
+            secure: true,
+            sameSite: 'none'
         })
             .status(200)
             .json({
