@@ -7,7 +7,12 @@ const app: Express = express();
 app.use(express.json());
 
 app.use(cookieParser());
-app.use(cors());
+
+const corsOptions = {
+  origin: "https://nodetoursapi.onrender.com"
+};
+
+app.use(cors(corsOptions));
 app.use('/tours', tourRouter);
 app.use('/users', userRouter);
 
