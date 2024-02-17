@@ -26,10 +26,7 @@ exports.signup = async (req: Request, res: Response)  => {
     });
     const token: String = signup(newUser._id);
 
-    res.writeHead(200, {
-      "Content-Type": "text/plain",
-      "Set-Cookie": `cookieHTTP=test;httponly;max-age=${60 * 60 * 24}`
-    })
+    res.status(200)
       .json({
         user: {
           id: newUser._id,
@@ -37,7 +34,7 @@ exports.signup = async (req: Request, res: Response)  => {
           token: token
         }
       })
-      //.send();
+      .send();
   } catch(err) {
     return res.status(500)
       .json({
