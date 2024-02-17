@@ -22,8 +22,7 @@ exports.signup = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const { email } = req.body;
         const userWithSameEmail = yield User.findOne({ email });
         if (userWithSameEmail) {
-            res.status(409).send();
-            return;
+            return res.status(409);
         }
         const newUser = yield User.create({
             name: req.body.name,
@@ -32,7 +31,7 @@ exports.signup = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             passwordConfirm: req.body.passwordConfirm
         });
         const token = signup(newUser._id);
-        res.writeHead(200, {
+        return res.writeHead(200, {
             "Content-Type": "text/plain",
             "Set-Cookie": `cookieHTTP=test;httponly;max-age=${60 * 60 * 24}`
         })
@@ -46,7 +45,7 @@ exports.signup = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         //.send();
     }
     catch (err) {
-        res.status(500)
+        return res.status(500)
             .json({
             message: err
         });

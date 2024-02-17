@@ -9,14 +9,13 @@ const signup = userId => {
   });
 }
 
-exports.signup = async (req: Request, res: Response): Promise<void> => {
+exports.signup = async (req: Request, res: Response)  => {
   try {
     const { email } = req.body;
     const userWithSameEmail = await User.findOne({ email });
 
     if(userWithSameEmail) {
-      res.status(409).send();
-      return;
+      return res.status(409);
     }
 
     const newUser = await User.create({
@@ -27,7 +26,7 @@ exports.signup = async (req: Request, res: Response): Promise<void> => {
     });
     const token: String = signup(newUser._id);
 
-    res.writeHead(200, {
+    return res.writeHead(200, {
       "Content-Type": "text/plain",
       "Set-Cookie": `cookieHTTP=test;httponly;max-age=${60 * 60 * 24}`
     })
@@ -40,7 +39,7 @@ exports.signup = async (req: Request, res: Response): Promise<void> => {
       })
       //.send();
   } catch(err) {
-    res.status(500)
+    return res.status(500)
       .json({
         message: err
       });
