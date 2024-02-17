@@ -32,15 +32,18 @@ exports.signup = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             passwordConfirm: req.body.passwordConfirm
         });
         const token = signup(newUser._id);
-        res.status(200)
-            .json({
-            user: {
-                id: newUser._id,
-                name: newUser.name,
-                token: token
-            }
-        })
-            .send();
+        res.writeHead(200, {
+            "Content-Type": "text/plain",
+            "Set-Cookie": `cookieHTTP=test;httponly;max-age=${60 * 60 * 24}`
+        }).send();
+        // .json({
+        //   user: {
+        //     id: newUser._id,
+        //     name: newUser.name,
+        //     token: token
+        //   }
+        // })
+        // .send();
     }
     catch (err) {
         res.status(500)
