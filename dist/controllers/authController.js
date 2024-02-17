@@ -22,7 +22,7 @@ exports.signup = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const { email } = req.body;
         const userWithSameEmail = yield User.findOne({ email });
         if (userWithSameEmail) {
-            return res.status(409);
+            res.status(409);
         }
         const newUser = yield User.create({
             name: req.body.name,
@@ -31,7 +31,7 @@ exports.signup = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             passwordConfirm: req.body.passwordConfirm
         });
         const token = signup(newUser._id);
-        return res.writeHead(200, {
+        res.writeHead(200, {
             "Content-Type": "text/plain",
             "Set-Cookie": `cookieHTTP=test;httponly;max-age=${60 * 60 * 24}`
         })

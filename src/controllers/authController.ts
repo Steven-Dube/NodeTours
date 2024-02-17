@@ -15,7 +15,7 @@ exports.signup = async (req: Request, res: Response)  => {
     const userWithSameEmail = await User.findOne({ email });
 
     if(userWithSameEmail) {
-      return res.status(409);
+      res.status(409);
     }
 
     const newUser = await User.create({
@@ -26,7 +26,7 @@ exports.signup = async (req: Request, res: Response)  => {
     });
     const token: String = signup(newUser._id);
 
-    return res.writeHead(200, {
+    res.writeHead(200, {
       "Content-Type": "text/plain",
       "Set-Cookie": `cookieHTTP=test;httponly;max-age=${60 * 60 * 24}`
     })
