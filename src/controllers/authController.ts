@@ -9,7 +9,7 @@ const signup = userId => {
   });
 }
 
-exports.signup = async (req: Request, res: Response)  => {
+exports.signup = async (req: Request, res: Response) : Promise<void>  => {
   try {
     const { email } = req.body;
     const userWithSameEmail = await User.findOne({ email });
@@ -37,7 +37,7 @@ exports.signup = async (req: Request, res: Response)  => {
       })
       .send();
   } catch(err) {
-    return res.status(500)
+    res.status(500)
       .json({
         message: err
       });

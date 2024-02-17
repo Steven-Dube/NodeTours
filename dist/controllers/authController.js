@@ -43,7 +43,7 @@ exports.signup = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             .send();
     }
     catch (err) {
-        return res.status(500)
+        res.status(500)
             .json({
             message: err
         });
