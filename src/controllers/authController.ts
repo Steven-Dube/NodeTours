@@ -38,7 +38,7 @@ exports.signup = async (req: Request, res: Response): Promise<void> => {
           token: token
         }
       })
-      .send();
+      //.send();
   } catch(err) {
     res.status(500)
       .json({
