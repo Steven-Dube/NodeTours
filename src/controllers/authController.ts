@@ -15,7 +15,8 @@ exports.signup = async (req: Request, res: Response)  => {
     const userWithSameEmail = await User.findOne({ email });
 
     if(userWithSameEmail) {
-      res.status(409);
+      res.status(409).send();
+      return;
     }
 
     const newUser = await User.create({

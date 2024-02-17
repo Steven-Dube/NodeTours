@@ -22,7 +22,8 @@ exports.signup = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const { email } = req.body;
         const userWithSameEmail = yield User.findOne({ email });
         if (userWithSameEmail) {
-            res.status(409);
+            res.status(409).send();
+            return;
         }
         const newUser = yield User.create({
             name: req.body.name,
