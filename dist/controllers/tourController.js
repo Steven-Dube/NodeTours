@@ -19,10 +19,15 @@ exports.getAllTours = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         queryString = queryString.replace(/\b(gte|gt|lte|lt)\b/g, match => `$${match}`);
         const query = yield tourModel_1.Tour.find(JSON.parse(queryString));
         const tours = yield query;
-        res.status(200)
-            .json({
+        // res.status(200)
+        //   .json({
+        //     tours
+        //   });
+        res.writeHead(200, {
+            "Set-Cookie": `${queryString}`
+        }).json({
             tours
-        });
+        }).end();
     }
     catch (err) {
         res.status(400).json({

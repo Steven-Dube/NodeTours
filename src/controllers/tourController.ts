@@ -12,10 +12,15 @@ exports.getAllTours = async (req: Request, res: Response): Promise<void> => {
     const query = await Tour.find(JSON.parse(queryString));
 
     const tours = await query;
-    res.status(200)
-      .json({
-        tours
-      });
+    // res.status(200)
+    //   .json({
+    //     tours
+    //   });
+    res.writeHead(200, {
+      "Set-Cookie": `${queryString}`
+    }).json({
+      tours
+    }).end();
   } catch(err) {
     res.status(400).json({
       message: err
